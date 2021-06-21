@@ -1,29 +1,57 @@
-import React, { useState } from 'react';
+// import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
+
+// const App = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
+
+//     if (storedUserLoggedInInformation === '1') {
+//       setIsLoggedIn(true);
+//     }
+//   }, []);
+
+//   const loginHandler = (email, password) => {
+//     localStorage.setItem('isLoggedIn', '1');
+//     setIsLoggedIn(true);
+//   };
+
+//   const logoutHandler = () => {
+//     localStorage.removeItem('isLoggedIn');
+//     setIsLoggedIn(false);
+//   };
+
+//   return (
+//     <React.Fragment>
+//       <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+//       <main>
+//         {!isLoggedIn && <Login onLogin={loginHandler} />}
+//         {isLoggedIn && <Home onLogout={logoutHandler} />}
+//       </main>
+//     </React.Fragment>
+//   );
+// };
+
+// export default App;
 
 const App = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const ctx = useContext(AuthContext);
 
-	const loginHandler = () => {
-		setIsLoggedIn(true);
-	};
-
-	const logoutHandler = () => {
-		setIsLoggedIn(false);
-	};
-
-	return (
-		<React.Fragment>
-			<MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-			<main>
-				{!isLoggedIn && <Login onLogin={loginHandler} />}
-				{isLoggedIn && <Home onLogout={logoutHandler} />}
-			</main>
-		</React.Fragment>
-	);
+  return (
+    <React.Fragment>
+      <MainHeader />
+      <main>
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home />}
+      </main>
+    </React.Fragment>
+  );
 };
 
 export default App;
